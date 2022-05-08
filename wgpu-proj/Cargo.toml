@@ -1,0 +1,13 @@
+[package]
+name = "wgpu-proj"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+winit = "0.x"
+env_logger = "0.x"
+log = "0.x"
+wgpu = "0.x"
+pollster = "0.x"
