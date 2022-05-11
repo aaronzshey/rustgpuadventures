@@ -1,13 +1,12 @@
 [package]
-name = "wgpu-proj"
+name = "windowless"
 version = "0.1.0"
+authors = ["Ben Hansen <bhbenjaminhansen@gmail.com>"]
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-winit = "0.x"
-env_logger = "0.x"
-log = "0.x"
-wgpu = "0.x"
-pollster = "0.x"
+image = "0.23"
+wgpu = "0.12"
+pollster = "0.2"
