@@ -1,3 +1,5 @@
+#version 450 
+
 layout(binding = 0) uniform MyBlock {
     vec2 u_resolution;
 };
