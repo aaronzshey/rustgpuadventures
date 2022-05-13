@@ -4,7 +4,7 @@ async fn run() {
     let instance = wgpu::Instance::new(wgpu::Backends::all());
     let adapter = instance
         .request_adapter(&wgpu::RequestAdapterOptions {
-            power_preference: wgpu::PowerPreference::default(),
+            power_preference: wgpu::PowerPreference::LowPower,
             compatible_surface: None,
             force_fallback_adapter: false,
         })
@@ -46,6 +46,7 @@ async fn run() {
     };
     let output_buffer = device.create_buffer(&output_buffer_desc);
 
+//----
     let vs_src = include_str!("shader.vert");
     let fs_src = include_str!("shader.frag");
     let mut compiler = shaderc::Compiler::new().unwrap();
@@ -69,6 +70,8 @@ async fn run() {
         .unwrap();
     let vs_data = wgpu::util::make_spirv(vs_spirv.as_binary_u8());
     let fs_data = wgpu::util::make_spirv(fs_spirv.as_binary_u8());
+//-----
+    
     let vs_module = device.create_shader_module(&wgpu::ShaderModuleDescriptor {
         label: Some("Vertex Shader"),
         source: vs_data,
