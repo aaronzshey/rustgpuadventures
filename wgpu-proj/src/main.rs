@@ -1,5 +1,5 @@
 use std::num::NonZeroU32;
-use std::env;
+
 
 async fn run() {
     let instance = wgpu::Instance::new(wgpu::Backends::all());
@@ -48,9 +48,21 @@ async fn run() {
     let output_buffer = device.create_buffer(&output_buffer_desc);
 
     
+    /*
     let shader = device.create_shader_module(&wgpu::ShaderModuleDescriptor {
         label: Some("Shader"),
         source: wgpu::ShaderSource::Wgsl(include_str!("shaders/shader.wgsl").into()),
+    });
+    */
+    
+    let vs_module = device.create_shader_module(&wgpu::ShaderModuleDescriptor {
+    	label: Some("Vertex Shader"),
+    	source: wgpu::ShaderSource::Wgsl(include_str!("shaders/vert.wgsl").into())
+    });
+    
+    let fs_module = device.create_shader_module(&wgpu::ShaderModuleDescriptor {
+    	label: Some("Fragment Shader"),
+    	source: wgpu::ShaderSource::Wgsl(include_str!("shaders/frag.wgsl").into())
     });
 
 
@@ -67,13 +79,13 @@ async fn run() {
         label: Some("Render Pipeline"),
         layout: Some(&render_pipeline_layout),
         vertex: wgpu::VertexState {
-            module: &shader,
-            entry_point: "vs_main",
+            module: &vs_module,
+            entry_point: "main",
             buffers: &[],
         },
         fragment: Some(wgpu::FragmentState {
-            module: &shader,
-            entry_point: "fs_main",
+            module: &fs_module,
+            entry_point: "main",
             targets: &[wgpu::ColorTargetState {
                 format: texture_desc.format,
                 blend: Some(wgpu::BlendState {
@@ -175,6 +187,7 @@ async fn run() {
 }
 
 fn main() {
+//use std::env;
 //env::set_var("RUST_BACKTRACE", "1");
     pollster::block_on(run());
 }
