@@ -51,7 +51,7 @@ async fn run() {
 
     let shader = device.create_shader_module(&wgpu::ShaderModuleDescriptor {
         label: Some("Shader"),
-        source: wgpu::ShaderSource::Wgsl(include_str!("shaders/shader.wgsl").into()),
+        source: wgpu::ShaderSource::Wgsl(include_str!("shaders/shader2.wgsl").into()),
     });
 
 
@@ -115,6 +115,17 @@ async fn run() {
         let render_pass_desc = wgpu::RenderPassDescriptor {
             label: Some("Render Pass"),
             color_attachments: &[wgpu::RenderPassColorAttachment {
+            
+            	view: &texture_view,
+            	resolve_target: None,
+            	ops: wgpu::Operations {
+            		load: wgpu::LoadOp::Load,
+            		store: true,
+            	},
+            	
+            }],
+            /*
+            color_attachments: &[wgpu::RenderPassColorAttachment {
                 view: &texture_view,
                 resolve_target: None,
                 ops: wgpu::Operations {
@@ -127,12 +138,13 @@ async fn run() {
                     store: true,
                 },
             }],
+            */
             depth_stencil_attachment: None,
         };
         let mut render_pass = encoder.begin_render_pass(&render_pass_desc);
 
         render_pass.set_pipeline(&render_pipeline);
-        render_pass.draw(0..3, 0..1);
+        render_pass.draw(0..1, 0..1);
     }
 
     encoder.copy_texture_to_buffer(
