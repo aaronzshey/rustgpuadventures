@@ -1,6 +1,13 @@
 use std::num::NonZeroU32;
 
 
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+struct Vertex {
+    position: [f32; 3],
+    color: [f32; 3],
+}
+
 async fn run() {
     let instance = wgpu::Instance::new(wgpu::Backends::all());
     let adapter = instance
